@@ -12,22 +12,42 @@
       </div>
     </div>
 
-    <ul class="list-group" v-if="tasks.length > 0">
+    <h3 class="font-weight-light m-4">
+      Tarefas a fazer ({{ $store.getters.tasksIncompleted.length }})
+    </h3>
+
+    <ul class="list-group" v-if="$store.getters.tasksIncompleted.length > 0">
       <ListItemTask
-        v-for="task in tasks"
+        v-for="task in $store.getters.tasksIncompleted"
         :key="task.id"
         :task="task"
-        @editar="taskSelectForEdit"
+        @edit="taskSelectForEdit"
       />
     </ul>
 
-    <p v-else>Nenhuma tarefa criada.</p>
+    <p v-else>Nenhuma tarefa a fazer.</p>
+
+    <h3 class="font-weight-light m-4">
+      Tarefas Concluidas ({{ $store.getters.tasksCompleted.length }})
+    </h3>
+
+    <ul class="list-group" v-if="$store.getters.tasksCompleted.length > 0">
+      <ListItemTask
+        v-for="task in $store.getters.tasksCompleted"
+        :key="task.id"
+        :task="task"
+        @edit="taskSelectForEdit"
+      />
+    </ul>
+
+    <p v-else>Nenhuma tarefa a fazer.</p>
 
     <SaveTask v-if="exhibitForm" :task="taskSelected" />
   </div>
 </template>
 
 <script>
+import { mapState } from "vuex";
 import SaveTask from "./SaveTask.vue";
 import ListItemTask from "./ListItemTask.vue";
 
@@ -40,12 +60,10 @@ export default {
     return {
       exhibitForm: false,
       taskSelected: undefined,
-      tasks: [
-        { id: 1, title: "Aprender Vue", completed: true },
-        { id: 2, title: "Aprender Vue Router", completed: true },
-        { id: 3, title: "Aprender Vuex", completed: false },
-      ],
     };
+  },
+  computed: {
+    ...mapState(["tasks"]),
   },
   methods: {
     taskForm() {

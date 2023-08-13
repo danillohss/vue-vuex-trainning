@@ -56,5 +56,10 @@ export default {
       console.log("Operação: ", operation);
     },
   },
+  created() {
+    if (this.task) {
+      console.log(this.$store.getters.searchTaskId(this.task.id));
+    }
+  },
 };
 </script>
