@@ -4,11 +4,7 @@ import Vuex from 'vuex';
 export default new Vuex.Store({
     state: {
         count: 0,
-        tasks: [
-            { id: 1, title: "Aprender Vue", completed: true },
-            { id: 2, title: "Aprender Vue Router", completed: true },
-            { id: 3, title: "Aprender Vuex", completed: false },
-        ],
+        tasks: [],
     },
     getters: {
         tasksCompleted(state) {
@@ -25,5 +21,10 @@ export default new Vuex.Store({
                 return state.tasks.find(t => t.id === id);
             };
         },
+    },
+    mutations: {
+        listingTasks(state, payload) {
+            state.tasks = payload
+        }
     }
 })

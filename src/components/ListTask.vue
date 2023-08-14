@@ -13,12 +13,12 @@
     </div>
 
     <h3 class="font-weight-light m-4">
-      Tarefas a fazer ({{ $store.getters.tasksIncompleted.length }})
+      Tarefas a fazer ({{ tasksIncompleted.length }})
     </h3>
 
-    <ul class="list-group" v-if="$store.getters.tasksIncompleted.length > 0">
+    <ul class="list-group" v-if="tasksIncompleted.length > 0">
       <ListItemTask
-        v-for="task in $store.getters.tasksIncompleted"
+        v-for="task in tasksIncompleted"
         :key="task.id"
         :task="task"
         @edit="taskSelectForEdit"
@@ -28,12 +28,12 @@
     <p v-else>Nenhuma tarefa a fazer.</p>
 
     <h3 class="font-weight-light m-4">
-      Tarefas Concluidas ({{ $store.getters.tasksCompleted.length }})
+      Tarefas Concluidas ({{ tasksCompleted.length }})
     </h3>
 
-    <ul class="list-group" v-if="$store.getters.tasksCompleted.length > 0">
+    <ul class="list-group" v-if="tasksCompleted.length > 0">
       <ListItemTask
-        v-for="task in $store.getters.tasksCompleted"
+        v-for="task in tasksCompleted"
         :key="task.id"
         :task="task"
         @edit="taskSelectForEdit"
@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapGetters, mapState } from "vuex";
 import SaveTask from "./SaveTask.vue";
 import ListItemTask from "./ListItemTask.vue";
 
@@ -64,6 +64,11 @@ export default {
   },
   computed: {
     ...mapState(["tasks"]),
+    ...mapGetters([
+      "tasksIncompleted",
+      "tasksCompleted",
+      "totalTasksCompleted",
+    ]),
   },
   methods: {
     taskForm() {
@@ -81,6 +86,13 @@ export default {
       this.exhibitForm = false;
       this.taskSelected = undefined;
     },
+  },
+  created() {
+    this.$store.commit("listingTasks", [
+      { id: 1, title: "Aprender Vue", completed: true },
+      { id: 2, title: "Aprender Vue Router", completed: true },
+      { id: 3, title: "Aprender Vuex", completed: false },
+    ]);
   },
 };
 </script>
