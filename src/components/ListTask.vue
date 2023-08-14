@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from "vuex";
+import { mapGetters, mapMutations, mapState } from "vuex";
 import SaveTask from "./SaveTask.vue";
 import ListItemTask from "./ListItemTask.vue";
 
@@ -65,12 +65,15 @@ export default {
   computed: {
     ...mapState(["tasks"]),
     ...mapGetters([
-      "tasksIncompleted",
       "tasksCompleted",
+      "tasksIncompleted",
       "totalTasksCompleted",
     ]),
   },
   methods: {
+    //Ao mapear a mutation como estamos fazendo na linha abaixo é possível descartar o método commit pra fazer o evento pro nosso state do vuex
+    //Fazendo isso podemos chamar a mutation como uma função na linha 95
+    ...mapMutations(["listingTasks"]),
     taskForm() {
       if (this.taskSelected) {
         this.taskSelected = undefined;
@@ -87,12 +90,13 @@ export default {
       this.taskSelected = undefined;
     },
   },
+
   created() {
-    this.$store.commit("listingTasks", [
-      { id: 1, title: "Aprender Vue", completed: true },
-      { id: 2, title: "Aprender Vue Router", completed: true },
-      { id: 3, title: "Aprender Vuex", completed: false },
-    ]);
-  },
+  this.listingTasks([
+    { id: 1, title: "Aprender Vue", completed: false },
+    { id: 2, title: "Aprender Vue Router", completed: false },
+    { id: 3, title: "Aprender Vuex", completed: false },
+  ]);
+},
 };
 </script>
