@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations, mapState } from "vuex";
+import { mapGetters, mapMutations, mapActions, mapState } from "vuex";
 import SaveTask from "./SaveTask.vue";
 import ListItemTask from "./ListItemTask.vue";
 
@@ -70,10 +70,13 @@ export default {
       "totalTasksCompleted",
     ]),
   },
+  //Ao mapear a mutation como estamos fazendo na linha abaixo é possível descartar o método commit pra fazer o evento pro nosso state do vuex
+  //Fazendo isso podemos chamar a mutation como uma função na linha 95
   methods: {
-    //Ao mapear a mutation como estamos fazendo na linha abaixo é possível descartar o método commit pra fazer o evento pro nosso state do vuex
-    //Fazendo isso podemos chamar a mutation como uma função na linha 95
     ...mapMutations(["listingTasks"]),
+    ...mapActions({
+      loadingTasks: "loadingTasks",
+    }),
     taskForm() {
       if (this.taskSelected) {
         this.taskSelected = undefined;
@@ -91,12 +94,23 @@ export default {
     },
   },
 
+  //Método commit é usado para chamar mutations
+  //Método dispatch é usado para chamar actions
+
   created() {
-  this.listingTasks([
-    { id: 1, title: "Aprender Vue", completed: false },
-    { id: 2, title: "Aprender Vue Router", completed: false },
-    { id: 3, title: "Aprender Vuex", completed: false },
-  ]);
-},
+    //Aqui chamamos a nossa action, onde nela fazemos um código assincrono, só devemos fazer um código assincrono através das actions
+    this.loadingTasks([
+      { id: 1, title: "Aprender Vue", completed: false },
+      { id: 2, title: "Aprender Vue Router", completed: false },
+      { id: 3, title: "Aprender Vuex", completed: true },
+    ]);
+
+    //Aqui chamamos a nossa mutation, onde nela fazemos um código sincrono, só devemos fazer um código sincrono através das mutations
+    this.listingTasks([
+      { id: 1, title: "Aprender Vue", completed: false },
+      { id: 2, title: "Aprender Vue Router", completed: false },
+      { id: 3, title: "Aprender Vuex", completed: true },
+    ]);
+  },
 };
 </script>

@@ -24,4 +24,11 @@ export default new Vuex.Store({
             state.tasks = payload;
         },
     },
+    actions: {
+        //Actions são bem parecidas com mutations porém é nela que usamos códigos assincronos como por exemplo uma reequisição ao backend, apoós a requisição ser feita chamamos
+        //a mutation atravez do commit e passamos os dados recebidos do backend e a mutation altera o estado centralizado, esse é o caminho correto
+        loadingTasks(context, payload) {
+            context.commit('listingTasks', payload);
+        }
+    }
 });
