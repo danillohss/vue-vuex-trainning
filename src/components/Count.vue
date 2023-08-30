@@ -12,14 +12,14 @@ export default {
   name: "CONTADOR",
   methods: {
     decrement() {
-      this.$store.state.count--;
+      this.$store.state.count.count--;
     },
     increment() {
-      this.$store.state.count++;
+      this.$store.state.count.count++;
     },
   },
   computed: mapState({
-    count: (state) => state.count,
+    count: (state) => state.count.count,
   }),
 };
 </script>

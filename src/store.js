@@ -1,8 +1,13 @@
 import Vuex from 'vuex';
 
-export default new Vuex.Store({
+const countModule = {
     state: {
         count: 0,
+    }
+}
+
+const tasksModule = {
+    state: {
         tasks: [],
     },
     getters: {
@@ -31,4 +36,14 @@ export default new Vuex.Store({
             context.commit('listingTasks', payload);
         }
     }
+}
+
+
+const store = new Vuex.Store({
+    modules: {
+        count: countModule,
+        tasks: tasksModule,
+    }
 });
+
+export default store;
