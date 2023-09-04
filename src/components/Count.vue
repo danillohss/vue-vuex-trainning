@@ -18,8 +18,8 @@ export default {
       this.$store.state.count.count++;
     },
   },
-  computed: mapState({
-    count: (state) => state.count.count,
+  computed: mapState('count',{
+    count: (state) => state.count,
   }),
 };
 </script>

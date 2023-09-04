@@ -58,7 +58,7 @@ export default {
   },
   created() {
     if (this.task) {
-      console.log(this.$store.getters.searchTaskId(this.task.id));
+      console.log(this.$store.getters["tasks/searchTaskId"](this.task.id));
     }
   },
 };

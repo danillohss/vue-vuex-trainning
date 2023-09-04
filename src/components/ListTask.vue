@@ -64,7 +64,7 @@ export default {
   },
   computed: {
     ...mapState(["tasks"]),
-    ...mapGetters([
+    ...mapGetters("tasks", [
       "tasksCompleted",
       "tasksIncompleted",
       "totalTasksCompleted",
@@ -73,8 +73,8 @@ export default {
   //Ao mapear a mutation como estamos fazendo na linha abaixo é possível descartar o método commit pra fazer o evento pro nosso state do vuex
   //Fazendo isso podemos chamar a mutation como uma função na linha 95
   methods: {
-    ...mapMutations(["listingTasks"]),
-    ...mapActions({
+    ...mapMutations("tasks", ["listingTasks"]),
+    ...mapActions("tasks", {
       loadingTasks: "loadingTasks",
     }),
     taskForm() {

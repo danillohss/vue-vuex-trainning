@@ -1,12 +1,20 @@
 import Vuex from 'vuex';
 
 const countModule = {
+    /** A principal função do "namespaced" é evitar conflitos de nomes entre os módulos, o que é especialmente útil em aplicativos maiores ou complexos, 
+     * nos quais múltiplos desenvolvedores podem estar trabalhando em diferentes partes do estado global. */
+    // No mapeamento também é necessário especificar o modulo como está na linha 67 do arquivo 'ListTask' por exemplo, onde o módulo 'task' é especificado
+    namespaced: true,
     state: {
         count: 0,
+    },
+    getters: {
+        currentCount: state => state.count
     }
 }
 
 const tasksModule = {
+    namespaced: true,
     state: {
         tasks: [],
     },
@@ -45,5 +53,7 @@ const store = new Vuex.Store({
         tasks: tasksModule,
     }
 });
+
+console.log(store)
 
 export default store;
